@@ -1,0 +1,11 @@
+typed	expected	category
+poteebuju	potřebuju	typo
+klavesncie	klávesnici	typo
+conjsi	co jsi	word-boundary
+z yjlej	zvyklej	word-boundary
+nejakoung	nějakou	typo
+celej	celej	preserve-colloquial
+dobrej	dobrej	preserve-colloquial
+nejakej	nějakej	preserve-colloquial
+zvyklej	zvyklej	preserve-colloquial
+kterej	kterej	preserve-colloquial
