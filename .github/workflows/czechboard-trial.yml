@@ -30,7 +30,11 @@ jobs:
           SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
           if [ ! -x "$SDKMANAGER" ]; then SDKMANAGER="$(command -v sdkmanager)"; fi
           yes | "$SDKMANAGER" --licenses >/dev/null || true
-          "$SDKMANAGER" "platforms;android-37" "build-tools;37.0.0" "ndk;28.0.13004108"
+          "$SDKMANAGER" "platforms;android-37.0" "build-tools;37.0.0" "ndk;28.0.13004108"
+          # AGP 8.x requests android-37, while sdkmanager installs android-37.0.
+          if [ -d "$ANDROID_HOME/platforms/android-37.0" ] && [ ! -e "$ANDROID_HOME/platforms/android-37" ]; then
+            ln -s "$ANDROID_HOME/platforms/android-37.0" "$ANDROID_HOME/platforms/android-37"
+          fi
       - name: Build side-by-side debug APK
         run: bash ./gradlew :app:assembleDebug --no-daemon --stacktrace
       - name: Verify APK does not request INTERNET permission
