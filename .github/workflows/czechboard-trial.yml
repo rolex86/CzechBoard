@@ -25,11 +25,12 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - uses: android-actions/setup-android@v3
       - name: Install Android SDK components
         run: |
-          yes | sdkmanager --licenses >/dev/null || true
-          sdkmanager "platforms;android-37" "build-tools;37.0.0" "ndk;28.0.13004108"
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          if [ ! -x "$SDKMANAGER" ]; then SDKMANAGER="$(command -v sdkmanager)"; fi
+          yes | "$SDKMANAGER" --licenses >/dev/null || true
+          "$SDKMANAGER" "platforms;android-37" "build-tools;37.0.0" "ndk;28.0.13004108"
       - name: Build side-by-side debug APK
         run: bash ./gradlew :app:assembleDebug --no-daemon --stacktrace
       - name: Verify APK does not request INTERNET permission
